@@ -1,4 +1,4 @@
-# Django settings for ProjectSpartan2 project.
+ # Django settings for ProjectKokous project.
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
