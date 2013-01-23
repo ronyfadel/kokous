@@ -1,0 +1,30 @@
+{% extends "baseTemplates/base.html" %}
+
+{% block title %}{{ sectionTitle }}{% endblock %}
+{% block extraHeadUser %}<link rel="stylesheet" type="text/css" href="/static/css/extraBodyStyles.css" />{% endblock %}
+
+{% block content %}
+<!-- Side Bar -->
+<div class="sidebar">
+	<div class="sections">
+		<ul class="nav">
+			{% for section in sections %}
+			<li class={% if section ==  sectionTitle %}"selected"{% else %}"notselected"{% endif %}>
+			<a class="links" href="/{{ section }}">
+			{% if section ==  sectionTitle %}<font color="white">{{ section|capfirst }}</font>{% else %}{{ section|capfirst }}{% endif %}
+			</a></li><br />
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+<!-- Container -->
+<div class="container">
+	<div class="row">
+		<div class="span19">
+			<h1>{{ sectionTitle.capitalize }}</h1>
+			{% block sectionContent %}
+			{% endblock %}
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+	<head>
+		<title>Kokous - {% block title %}Meetings on Steroids{% endblock %}</title>
+		<link href="/static/css/bootstrap.css" rel="stylesheet" type="text/css" />
+		<link href="/static/css/extraStyles.css" rel="stylesheet" type="text/css" />
+		<link rel="icon" type="image/png" href="/static/favicon.png" />
+		{% block extraHead %}{% endblock %}
+		{% block extraHeadUser %}{% endblock %}
+	</head>
+	<body>
+		<!-- Top Bar -->
+		<div class="topbar">
+			<div class="fill">
+				<div class="container-fluid">
+					<a class="brand" href="/">Kokous</a>
+					<ul class="nav">
+			            <li class="active"><a href="/">Home</a></li>
+			            <li><a href="/about/">About</a></li>
+			            <li><a href="/contact/">Contact</a></li>
+			        </ul>
+						{% block loginFields %}
+						{% if user.is_authenticated %}
+						<p class="pull-right">Logged in as <a href="/profile/">{{ user.username }}</a> | <a href="/logout/">logout</a></p>
+						{% else %}
+						<form action="/login/" class="pull-right" method="post">{% csrf_token %}
+							{{ loginForm.username }}
+							{{ loginForm.password }}
+						<button class="btn" type="submit" name="login">Sign in</button>
+						{% endif %}
+						{% endblock %}
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		{% block content %}{% endblock %}
+
+		{% block footer %}
+		<!-- Footer Div -->
+		<br />
+		<div class="footer">
+			<div class="row">
+				<div class="span16 offset10">
+					<p>
+						Kokous &copy; 2011 &middot; <a href="/about/">About</a>
+						&middot; <a href="/blog/">Blog</a>
+						&middot; <a href="/contact/">Contact</a>
+						&middot; <a href="/TOS/">Terms of Service</a>
+						&middot; <a href="/privacy/">Privacy</a>
+						&middot; <a href="/about/resources/">Resources</a>
+					</p>
+				</div>
+			</div>
+		</div>
+		{% endblock %}
+	</body>
+</html>

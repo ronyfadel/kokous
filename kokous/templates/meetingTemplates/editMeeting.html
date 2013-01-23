@@ -1,0 +1,99 @@
+{% extends "baseTemplates/baseUser.html" %}
+{% block extraHead %}
+<!-- extra CSS -->
+<link rel="stylesheet" type="text/css" href="/static/css/jQueryCSS/css/timecntr/jquery-ui-1.7.1.custom.css" />
+<link rel="stylesheet" type="text/css" href="/static/css/jQueryCSS/jquery.ptTimeSelect.css" />
+<link rel="stylesheet" type="text/css" href="/static/css/jQueryCSS/jquery.ui.all.css" />
+
+<!-- extra js -->
+<script src="/static/js/jquery1.6.2.js" type="text/javascript"></script>
+<script src="/static/js/jquery.ui.core.js" type="text/javascript"></script>
+<script src="/static/js/jquery.ui.datepicker.js" type="text/javascript"></script>
+<script src="/static/js/jquery.ui.widget.js" type="text/javascript"></script>
+<script src="/static/js/jquery.ptTimeSelect.js" type="text/javascript"></script>
+<script src="/static/js/editMeeting.js" type="text/javascript"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false" type="text/javascript"></script>
+<script src="/static/js/GoogleMapsAPI/gMaps.js" type="text/javascript"></script>
+{% endblock %}
+{% block sectionContent %}
+<form action="/meeting/edit/{{ meetingId }}" method="post">{% csrf_token %}
+	<table>
+	<tr>
+		<th>Title</th>
+		<td>
+			<div class="clearfix tableFormElem">
+				{{ meetingForm.title.errors }}
+				{{ meetingForm.title }}
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<th>Description</th>
+		<td>
+			<div class="clearfix tableFormElem">
+				{{ meetingForm.description.errors }}
+				{{ meetingForm.description }}
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<th>Participants</th>
+		<td>
+			<div class="clearfix tableFormElem">
+				<input id="inputParticipant" type="text" autocomplete="off" class="span8" placeholder="Search for users here"/>
+			    <div id="users"></div>
+				<br /><div id="dump" hidden="true"></div>
+				<h4>Participants:</h4>
+				<div id="members"></div>
+				{{ meetingForm.participants.errors }}
+				{{ meetingForm.participants }}
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<th>Date of Meeting</th>
+		<td>
+			<div class="clearfix tableFormElem">
+				{{ meetingForm.meeting_date.errors }}
+				{{ meetingForm.meeting_date }}
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<th>Start Time</th>
+		<td>
+			<div class="clearfix tableFormElem">
+				{{ meetingForm.start_time.errors }}
+				{{ meetingForm.start_time }}
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<th>End Time</th>
+		<td>
+			<div class="clearfix tableFormElem">
+				{{ meetingForm.end_time.errors }}
+				{{ meetingForm.end_time }}
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<th>Location</th>
+		<td>
+			<div class="clearfix tableFormElem">
+				{{ meetingForm.location.errors }}
+				{{ meetingForm.location }}
+			</div>
+			<div id="map_canvas" class="tableFormElem"></div>
+		</td>
+	</tr>
+		
+	</table>
+	<div class="row">
+		<div class="offset6">
+			<button class="btn primary" type="submit">Save</button>
+			<a href='/meeting/{{ meetingId }}'><button class="btn">Cancel</button></a>
+		</div>
+	</div>
+</form>
+{% endblock %}

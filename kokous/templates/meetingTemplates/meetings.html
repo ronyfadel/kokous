@@ -1,0 +1,65 @@
+{% extends "baseTemplates/baseUser.html" %}
+{% load humanize %}
+
+{% block extraHead %}
+<!-- Extra CSS -->
+<link rel="stylesheet" href="/static/css/jQueryCSS/general.css" type="text/css" />
+
+<!-- Extra js -->
+<script src="/static/js/jquery1.6.2.js" type="text/javascript"></script>
+<script src="/static/js/meetingPopup.js" type="text/javascript"></script>
+{% endblock %}
+
+{% block sectionContent %}
+<div class="clearfix">
+	<a href="/meeting/create/" class="btn primary">New Meeting</a>
+</div><br>
+<table class="bordered-table zebra-striped">
+	<thead>
+		<tr>
+		<th>Title</th>
+		<th>Description</th>
+		<th>Date</th>
+		<th>Starts At</th>
+		<th>Ends At</th>
+		<th>Participants</th>
+		<th>Admin</th>
+		</tr>												
+	</thead>
+	<tbody>
+		{% if meetings %}
+		{% for meeting in meetings %}
+		<td>{{ meeting.title }} <br/><a meetingID="{{ meeting.id }}" class="viewMeeting">View Meeting</a> | <a href="/meeting/{{ meeting.id }}">permalink</a></td>
+		<!-- <td>{{ meeting.title }} <br/>(<a href="/meeting/{{ meeting.id }}">View Meeting</a>)</td> -->
+		<td>{{ meeting.description|truncatewords:10|linebreaks }}</td>
+		<td>{{ meeting.meeting_date|naturalday|capfirst }}</td>
+		<td>{{ meeting.start_time|time:"h:i A" }}</td>
+		<td>{{ meeting.end_time|time:"h:i A" }}</td>
+		<td>
+			{% for member in meeting.members.all %}
+			<a href="/user/{{ member.id }}">{% ifequal member.id user.id %}you{% else %}{{ member }}{% endifequal %}</a>{% if not forloop.last %}, {% endif %}
+			{% endfor %}
+		</td>
+		<td>
+			{% for userMeeting in meeting.usermeeting_set.all %}
+			{% ifequal user userMeeting.user %}
+				{% if userMeeting.is_Admin %}<h3>&#10004;</h3>{% else %}<h3>&#x2717;</h3>{% endif %}
+			{% endifequal %}
+			{% endfor %}
+		</td>
+		</tr>
+		{% endfor %}
+		{% else %}
+		<tr><td colspan=7><i>You don't have any new meetings.</i></td></tr>
+		{% endif %}																			
+	</tbody>
+</table>
+
+<!-- Necessary for popup -->
+<div id="popupMeetingInfo">
+	<div id="page"></div>
+</div>
+<div id="backgroundPopup">
+</div>
+
+{% endblock %}

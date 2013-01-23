@@ -1,0 +1,57 @@
+
+
+{% extends "baseTemplates/base.html" %}
+{% block content %}
+<!-- Sign up Div -->
+<div class="hero-unit">
+	<div class="row">
+		<div class="span10 offset3">
+			<h1 style="font-size: 40px;">
+				Meetings on Steroids
+			</h1><br>
+			<h2>
+				Kokous helps you organize and connect with the people you work with.
+			</h2>
+			<img src="/static/avatars/1.jpeg"/>
+			<img src="/static/avatars/2.jpeg"/>
+			<img src="/static/avatars/3.jpeg"/>
+			<img src="/static/avatars/4.jpeg"/>
+			<img src="/static/avatars/5.jpeg"/>
+			<img src="/static/avatars/6.jpeg"/>
+			<img src="/static/avatars/7.jpeg"/>
+			<img src="/static/avatars/8.jpeg"/>
+			<img src="/static/avatars/9.jpeg"/>
+			<img src="/static/avatars/10.jpeg"/>
+			<img src="/static/avatars/11.jpeg"/>
+			<img src="/static/avatars/12.jpeg"/>
+			<img src="/static/avatars/13.jpeg"/>
+			<img src="/static/avatars/14.jpeg"/>
+			<img src="/static/avatars/15.png"/>
+			<img src="/static/avatars/16.jpeg"/>		
+		</div>
+		<div class="span6 offset1">
+			<h2>New to Kokous? Join Today!</h2><hr>
+			<form action="/signup/" method="post">{% csrf_token %}
+					<div class="clearfix">
+						{{ signupForm.first_name }}
+					</div>
+					<div class="clearfix">
+						{{ signupForm.last_name }}
+					</div>
+					<div class="clearfix">
+						{{ signupForm.email_address }}
+					</div>
+					<div class="clearfix">
+						{{ signupForm.username }}
+					</div>
+					<div class="clearfix">
+						{{ signupForm.password }}
+					</div>
+					<div class="clearfix">
+					<button class="btn primary" type="submit" name="signup">Sign up</button>
+					</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

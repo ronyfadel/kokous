@@ -1,0 +1,58 @@
+{% extends "baseTemplates/base.html" %}
+{% block loginFields %}{% endblock %}
+{% block title %}Sign up{% endblock %}
+{% block extraHeadUser %}<link rel="stylesheet" type="text/css" href="/static/css/extraBodyStyles.css" />{% endblock %}
+
+{% block content %}
+<div class="hero-unit">
+	<div class="row">
+		<div class="span offset9">
+			<form action="/signup/" method="post" class="signupForm">{% csrf_token %}
+					<div class="clearfix xlarge {% if signupForm.first_name.errors %}error{% else %}{% if signupForm.errors %}success{% endif %}{% endif %}">
+					{{ signupForm.first_name }}
+					<span class="help-inline">
+						{% for error in signupForm.first_name.errors %}
+						{{ error }}
+						{% endfor %}
+					</span>
+				</div>
+				<div class="clearfix xlarge {% if signupForm.last_name.errors %}error{% else %}{% if signupForm.errors %}success{% endif %}{% endif %}">
+					{{ signupForm.last_name }}
+					<span class="help-inline">
+						{% for error in signupForm.last_name.errors %}
+						{{ error }}
+						{% endfor %}
+					</span>
+				</div>
+				<div class="clearfix xlarge {% if signupForm.email_address.errors %}error{% else %}{% if signupForm.errors %}success{% endif %}{% endif %}">
+					{{ signupForm.email_address }}
+					<span class="help-inline">
+						{% for error in signupForm.email_address.errors %}
+						{{ error }}
+						{% endfor %}
+					</span>
+				</div>
+				<div class="clearfix xlarge {% if signupForm.username.errors %}error{% else %}{% if signupForm.errors %}success{% endif %}{% endif %}">
+					{{ signupForm.username }}
+					<span class="help-inline">
+						{% for error in signupForm.username.errors %}
+						{{ error }}
+						{% endfor %}
+					</span>
+				</div>
+				<div class="clearfix xlarge {% if signupForm.password.errors %}error{% else %}{% if signupForm.errors %}success{% endif %}{% endif %}">
+					{{ signupForm.password }}
+					<span class="help-inline">
+						{% for error in signupForm.password.errors %}
+						{{ error }}
+						{% endfor %}
+					</span>
+				</div>
+				<div class="clearfix">
+				<button class="btn primary" type="submit" name="signup" style="margin-left: 75px;">Sign up</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

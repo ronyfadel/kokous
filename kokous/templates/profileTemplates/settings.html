@@ -1,0 +1,87 @@
+{% extends "baseUser.html" %}
+{% block sectionContent %}
+
+{% block extraHead %}
+<script src="/static/js/jquery1.6.2.js" type="text/javascript"></script>
+<script src="/static/js/toggle.js" type="text/javascript"></script>
+{% endblock %}
+
+<form action="/settings/" method="post" enctype="multipart/form-data">{% csrf_token %}
+	<table>
+		{{ settingsForm.userId }}
+		<tr>
+			<td>Username</td>
+			<td>
+				<div class="clearfix tableFormElem">
+					<h4>{{ user.username }}</h4>
+				</div>
+			</td>
+		</tr>
+	<tr>
+		<td>Avatar</td>
+		<td>
+			<div class="clearfix tableFormElem">
+				{{ settingsForm.avatarFile.errors }}
+				{{ settingsForm.avatarFile }}
+			</div>
+		</td>
+	</tr>
+	
+	<tr>
+		<td>First Name</td>
+		<td>
+			<div class="clearfix tableFormElem">
+				{{ settingsForm.first_name.errors }}
+				{{ settingsForm.first_name }}
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>Last Name</td>
+		<td>
+			<div class="clearfix tableFormElem">
+				{{ settingsForm.last_name.errors }}
+				{{ settingsForm.last_name }}
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>Email Address</td>
+		<td>
+			<div class="clearfix tableFormElem">
+				{{ settingsForm.email_address.errors }}
+				{{ settingsForm.email_address }}
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>Bio</td>
+		<td>
+			<div class="clearfix tableFormElem">
+				{{ settingsForm.bio.errors }}
+				{{ settingsForm.bio }}
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>Password</td>
+		<td>
+			<input class="btn action tableFormElem" type="button" id="toggle" value="Change Password"/></br></br>
+			<div class="panel">
+				<div class="clearfix" style="margin-left : 50px;">
+					{{ settingsForm.old_password.errors }}
+					{{ settingsForm.old_password }}
+					
+				</div>
+				<div class="clearfix" style="margin-left : 50px;">
+					{{ settingsForm.new_password.errors }}
+					{{ settingsForm.new_password }}
+				</div>
+			</div>
+		</td>
+	</tr>
+	</table>
+	<input class="btn primary" type="submit" name="saveSetting" value="Save Changes"/>
+
+</form>
+{% endblock %}

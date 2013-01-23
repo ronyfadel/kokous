@@ -1,0 +1,30 @@
+{% extends "baseTemplates/base.html" %}
+{% block loginFields %}{% endblock %}
+{% block title %}Login{% endblock %}
+{% block extraHeadUser %}<link rel="stylesheet" type="text/css" href="/static/css/extraBodyStyles.css" />{% endblock %}
+
+{% block content %}
+<div class="hero-unit">
+	<div class="row">
+		<div class="span4.5 offset10">
+			<form action="/login/" class="signupForm" method="post">{% csrf_token %}
+				{% if loginForm.errors %}
+				<div class="alert-message error clearfix">
+					<p>Invalid Username or Password</p>
+				</div>
+				<br />
+				{% endif %}
+				<div class="clearfix">
+					{{ loginForm.username }}
+				</div>
+				<div class="clearfix">
+					{{ loginForm.password }}
+				</div>
+				<div class="clearfix">
+					<button class="btn" type="submit" name="login" style="margin: 10px;">Sign in</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

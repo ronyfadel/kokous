@@ -1,0 +1,46 @@
+{% extends "baseTemplates/baseUser.html" %}
+
+{% block sectionContent %}
+<form action="/meeting/finalize/{{ meetingId }}" method="post" >{% csrf_token %} {{ actionFormSet.management_form }}
+	<table>
+		<tr>
+			<th>Discussions</th>
+			<td>
+				<div class="clearfix tableFormElem">
+				{{ finalizeForm.discussions }}
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<th>Conclusions</th>
+			<td>
+				<div class="clearfix tableFormElem">
+				{{ finalizeForm.conclusions }}
+				</div>
+			</td>
+		</tr>
+		
+		{% for form in actionFormSet.forms %}
+		<tr>
+			<th>{{ form.name.value }}'s Actions</th>
+			<td>
+				<div class="clearfix tableFormElem">
+				{{ form.actions }}<br />
+				{{ form.completedActions }}
+				<span>Completed Action</span>
+				{{ form.userId }}
+				{{ form.name }}
+				</div>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+	
+	<div class="row">
+		<div class="offset6">
+			<button class="btn primary" type="submit">Save</button>
+			<a href='/meeting/{{ meetingId }}'><button class="btn">Cancel</button></a>
+		</div>
+	</div>
+</form>
+{% endblock %}

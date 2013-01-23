@@ -1,0 +1,62 @@
+body {
+	padding-top: 40px;
+}
+.hero-unit {
+	background: #EDEDED;
+}
+.input-high {
+	height: 22px;
+}
+.sidebar {
+  width: 175px;
+  height: 100%;
+  position: fixed;				
+  background: #333333;
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#333333), to(#1D1D1D));
+}
+.sections {
+	position: fixed;
+	left: 0px;
+	top: 120px;
+}
+.selected {
+	border: solid 1px;
+	background: #242424;
+	width: 173px;
+}
+a.selected {
+	color: #FFFFFF;
+}
+.notselected {
+	width: 183px;
+}
+.links {
+	color:#AAAAAA;
+}
+.container {
+	margin-top: 75px;
+}
+.signupForm {
+	border: solid;
+	border-color: #818181;
+	border-radius: 15px;
+	padding: 15px;
+}
+.alert-message {
+	margin: 0px;
+}
+.tableFormElem {
+	margin-left: 50px;
+}
+#map_canvas {
+	height: 250px;
+	width: 310px;
+}
+div.panel {
+height:120px;
+display:none;
+}
+#calendar {
+	width: 900px;
+	margin: auto;
+}

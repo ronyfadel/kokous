@@ -1,0 +1,50 @@
+{% extends 'baseTemplates/baseUser.html' %}
+{% load humanize %}
+{% block title %}{{ visitedUser.username }}{% endblock %}
+{% block sectionContent %}
+<h1>{{ visitedUser.last_name }}, {{ visitedUser.first_name }} ({{ visitedUser.username }})</h1><br />
+<div class="row">
+	<div class="span2">
+		{% if visitedUser.userprofile.avatar %}
+		<img src="{{ visitedUser.userprofile.avatar.url }}" width='100' height='100'/>
+		{% else %}
+		<img src="/static/avatars/def.png" width='100' height='100'/>
+		{% endif %}
+		{{ visitedUser.userprofile.bio|linebreaks }}
+	</div>
+	<div class="span16">
+		<h2> Meetings with {{ visitedUser.first_name }}:</h2><br />
+		<table class="bordered-table zebra-striped">
+			<thead>
+				<tr>
+				<th>Title</th>
+				<th>Description</th>
+				<th>Date</th>
+				<th>Starts At</th>
+				<th>Ends At</th>
+				<th>Participants</th>
+				</tr>												
+			</thead>
+			<tbody>
+				{% for meeting in meetings %}
+				<tr onclick="centerPopup();loadPopup({{ meeting.id }});">
+				<td>{{ meeting.title }} <span style="float: right">(<a href="/meeting/{{ meeting.id }}">View Meeting</a>)</span></td>
+				<td>{{ meeting.description|truncatewords:10|linebreaks }}</td>
+				<td>{{ meeting.meeting_date|naturalday|capfirst }}</td>
+				<td>{{ meeting.start_time|time:"h:i A" }}</td>
+				<td>{{ meeting.end_time|time:"h:i A" }}</td>
+				<td>
+					{% for member in meeting.members.all %}
+						<a href="/user/{{ member.id }}">{{ member }}</a>{% if not forloop.last %}, {% endif %}
+					{% endfor %}
+				</td>
+				</tr>
+				{% empty %}
+				<tr><td colspan=6><i>You don't have any meetings in common with {{ visitedUser.first_name }}.</i></td></tr>
+				{% endfor %}																			
+			</tbody>
+		</table>
+	</div>
+</div>
+{{ debug }}
+{% endblock %}

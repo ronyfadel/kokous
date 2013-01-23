@@ -1,0 +1,20 @@
+{% extends "baseTemplates/baseUser.html" %}
+{% block sectionContent %}
+<form action="/meeting/comment/create/{{ meetingId }}" method="post">{% csrf_token %}
+<table>
+	<h1>Add a Comment</h1>
+	<tr>
+		<td>
+		{{ commentForm.text }}
+		{{ commentForm.text.errors }}
+		</td>
+	</tr>
+</table>
+<div class="row">
+	<div class="tableFormElem">
+		<button class="btn primary" type="submit">Post Comment</button>
+		<a href="/meeting/{{ meetingId }}"><button class="btn">Cancel</button></a>
+	</div>
+</div>
+</form>
+{% endblock %}

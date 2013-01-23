@@ -1,0 +1,105 @@
+{% extends "baseTemplates/baseUser.html" %}
+{% load humanize %}
+
+{% block extraHead %}
+<script src="/static/js/jquery1.6.2.js" type="text/javascript"></script>
+<script src="/static/js/jquery1.6.2.js" type="text/javascript"></script>
+<script src="/static/js/profilejs/profileCalendar.js" type="text/javascript"></script>
+<link rel='stylesheet' type='text/css' href='/static/css/extraStyles.css' />
+<link rel='stylesheet' type='text/css' href='/static/css/CalendarCSS/theme.css' />
+<link rel='stylesheet' type='text/css' href='/static/css/CalendarCSS/fullcalendar.css' />
+<link rel='stylesheet' type='text/css' href='/static/css/CalendarCSS/fullcalendar.print.css' media='print' />
+<script type='text/javascript' src='/static/js/CalendarJS/jquery-ui-1.8.11.custom.min.js'></script>
+<script type='text/javascript' src='/static/js/CalendarJS/fullcalendar.min.js'></script>
+{% endblock %}
+
+{% block sectionContent %}
+<div class="row">
+	<div class="span2">
+		{% if user.userprofile.avatar %}
+		<img src="{{ user.userprofile.avatar.url }}" width='100' height='100'/>
+		{% else %}
+		<img src="/static/avatars/def.png" width='100' height='100'/>
+		{% endif %}
+		{{ user.userprofile.bio|linebreaks }}
+	</div>
+	<div class="span5">
+		<table>
+			<thead>
+				<tr><th><h2>Today's Meetings</h2></th></tr>
+			</thead>
+			<tbody>
+				{% for meeting in notifications %}
+				<tr>
+				<td>
+					<div class="alert-message {% if notification.urgency %}{% ifequal notification.urgency "High" %}error{% else %}warning{% endifequal %}{% endif %}">
+						<p>
+						<strong>Meeting at {{ meeting.start_time|time:"h:i A" }} </strong><br>
+						{{ meeting.title }}<br>
+						({% for member in meeting.members.all %}<a href='/user/{{ member.id }}'>{{ member }}</a>{% if not forloop.last %}, {% endif %}{% endfor %})<br>
+						<a href="/meeting/{{ meeting.id }}">View Meeting</a>
+						</p>
+					</div>
+				</td>
+				</tr>
+				{% empty %}
+				<tr><td><i>You don't have any meetings today, take a break!</i></td></tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<div class="span5">
+		<table>
+			<thead>
+				<tr><th><h2>New Meetings</h2></th></tr>
+			</thead>
+			<tbody>
+				{% for meeting in newMeetings %}
+				<tr>
+				<td>
+					<div class="alert-message info">
+						<p>
+						<strong>Created {{ meeting.created_date_time|naturalday|capfirst }} at {{ meeting.created_date_time|time:"h:i A" }} - Meeting {{ meeting.meeting_date|naturalday|capfirst }} at {{ meeting.start_time|time:"h:i A" }} </strong><br>
+						{{ meeting.title }}<br>
+						({% for member in meeting.members.all %}<a href='/user/{{ member.id }}'>{{ member }}</a>{% if not forloop.last %}, {% endif %}{% endfor %})<br>
+						<a href="/meeting/{{ meeting.id }}">View Meeting</a>
+						</p>
+					</div>
+				</td>
+				</tr>
+				{% empty %}
+				<tr><td><i>You don't have any new meetings.</i></td></tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="row">
+	<div class="span16 offset2">
+		<div id="calendar"></div>
+		<div userId="{{ user.id }}" id="userID"></div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="span16 offset2">
+		<table class="bordered-table zebra-striped">
+			<thead>
+				<tr><th><h2>Actions To Do</h2></th></tr>
+			</thead>
+			<tbody>
+				{% for action in actions %}
+				<tr>
+					<td>
+						<p>{{ action.actions }} - (<a href="/meeting/{{ action.meeting.id }}">{{ action.meeting.title }}</a>)</p>
+					</td>
+				</tr>
+				{% empty %}
+				<tr><td><i>You don't have any actions to date.</i></td></tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>		
+</div>
+{% endblock %}
